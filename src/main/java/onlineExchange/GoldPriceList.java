@@ -38,7 +38,9 @@ public class GoldPriceList {
     private GoldPrice[]  getPriceList(int counter)
     {
         RestTemplate restTemplate = new RestTemplate();
+        //
         return restTemplate.getForObject("http://api.nbp.pl/api/cenyzlota/last/" + counter + "/?format=json",GoldPrice[].class);
+        //return restTemplate.getForObject("http://api.nbp.pl/api/exchangerates/rates/a/gbp/last/2/?format=json",GoldPrice[].class);
     }
     private void reasultPrint()
     {

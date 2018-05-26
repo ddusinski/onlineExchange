@@ -1,3 +1,6 @@
 
-Š"squid:ClassVariableVisibilityCheck"PMake item a static final constant or non-public and provide accessors if needed.(ü­¦Èúÿÿÿÿ8äš›ô¸,
+Œ"squid:ClassVariableVisibilityCheck"WMake itemcounter a static final constant or non-public and provide accessors if needed.(žÞþ¾8º¶˜å¹,
 rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Óò­Ç
+Š"squid:ClassVariableVisibilityCheck"PMake item a static final constant or non-public and provide accessors if needed.(ü­¦Èúÿÿÿÿ8äš›ô¸,
+isquid:CommentedOutCodeLine+"<This block of commented-out lines of code should be removed.(ÂßÃ8ä¹Þç¹,
+Bsquid:S26291"$Invoke method(s) only conditionally.(äˆò¼8º¶˜å¹,
