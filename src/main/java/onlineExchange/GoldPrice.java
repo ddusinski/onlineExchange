@@ -1,7 +1,7 @@
 package onlineExchange;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -31,13 +31,9 @@ public class GoldPrice {
     }
 
     @Override
-    public String toString()
-    {
-        return "cena zlota{ data:"+ data +", wartosc="+ cena +'}';
+    public String toString() {
+        return "cena zlota{ data:" + data + ", wartosc=" + cena + '}';
     }
-
-
-
 
 
 }

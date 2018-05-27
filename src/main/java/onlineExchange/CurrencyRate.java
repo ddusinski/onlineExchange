@@ -10,7 +10,7 @@ public class CurrencyRate {
     @JsonProperty("no")
     private String rateNumber;
     @JsonProperty("effectiveDate")
-    private String EffectiveDate;
+    private String effectiveDate;
     @JsonProperty("mid")
     private double currencyMidRate;
 
@@ -19,7 +19,7 @@ public class CurrencyRate {
     }
 
     public String getEffectiveDate() {
-        return EffectiveDate;
+        return effectiveDate;
     }
 
     public String getRateNumber() {
@@ -31,7 +31,7 @@ public class CurrencyRate {
     }
 
     public void setEffectiveDate(String effectiveDate) {
-        EffectiveDate = effectiveDate;
+        this.effectiveDate = effectiveDate;
     }
 
     public void setRateNumber(String rateNumber) {
@@ -40,6 +40,6 @@ public class CurrencyRate {
 
     @Override
     public String toString() {
-        return " wartość waluty: "+this.currencyMidRate;
+        return " wartość waluty: " + this.currencyMidRate;
     }
 }

@@ -1,5 +1,5 @@
 
-isquid:CommentedOutCodeLine "<This block of commented-out lines of code should be removed.(²½ó×8“ô¾ë¹,
-Lsquid:S19400")Use the opposite operator ("!=") instead.(“ŒÊ¼úÿÿÿÿ8¥Õ€†º,
+Lsquid:S1940,")Use the opposite operator ("!=") instead.(“ŒÊ¼úÿÿÿÿ8¥Õ€†º,
+Bsquid:S2629D"$Invoke method(s) only conditionally.(ç‘¥»8éõ†º,
+isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²½ó×8“ô¾ë¹,
 ysquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Óò­Ç8»ãþò¸,
-Bsquid:S2629M"$Invoke method(s) only conditionally.(ç‘¥»8éõ†º,

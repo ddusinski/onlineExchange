@@ -11,7 +11,8 @@
                 <td>
                     Choose currency code:
                 </td>
-                <td><input class="form-control" type="radio" checked="checked" th:field="*{currencyCode}" value="gbp">GBP</td>
+                <td><input class="form-control" type="radio" checked="checked" th:field="*{currencyCode}" value="gbp">GBP
+                </td>
                 <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="eur">EUR</td>
                 <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="usd">USD</td>
                 <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="chf">CHF</td>
@@ -53,7 +54,6 @@
 <div style="height:500px;">
     <canvas id="myChart"></canvas>
     <script th:inline="javascript">
-
 
 
         var data = [[${datasarray}]];

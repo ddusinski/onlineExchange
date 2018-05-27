@@ -1,8 +1,4 @@
 
-Š"squid:ClassVariableVisibilityCheck"PMake item a static final constant or non-public and provide accessors if needed.(ü­¦Èúÿÿÿÿ8äš›ô¸,
-Bsquid:S2629+"$Invoke method(s) only conditionally.(äˆò¼8º¶˜å¹,
-Œ"squid:ClassVariableVisibilityCheck"WMake itemcounter a static final constant or non-public and provide accessors if needed.(žÞþ¾8º¶˜å¹,
+Œ"squid:ClassVariableVisibilityCheck"WMake itemcounter a static final constant or non-public and provide accessors if needed.(žÞþ¾8º¶˜å¹,
+Š"squid:ClassVariableVisibilityCheck"PMake item a static final constant or non-public and provide accessors if needed.(ü­¦Èúÿÿÿÿ8äš›ô¸,
 rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Óò­Ç
-xsquid:UselessImportCheck"HRemove this unused import 'org.springframework.web.client.RestTemplate'.(Îö¼Þûÿÿÿÿ8íÀå…º,
-bsquid:UnusedPrivateMethod'"1Remove this unused private "reasultPrint" method.(À‡Èúýÿÿÿÿ8À¦‡†º,
-nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÒÌâ–øÿÿÿÿ8À¦‡†º,

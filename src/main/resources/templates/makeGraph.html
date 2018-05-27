@@ -5,35 +5,9 @@
     <script th:src="@{/Chart.js}"></script>
 </head>
 <body>
-<div class="container">
-    <table class="table table-striped">
-
-            <tr>
-                <th>
-                    <div th:text="'Currency name: '+${crForm.getCurrencyCode()}"></div>
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    <div th:text="'Rates number: '+${crForm.getratesCount()}"></div>
-                </th>
-                <th>
-            </tr>
-    </table>
-    <table>
-            <tr th:each="part : ${results.getCurrencyRates()} ">
-
-                <td th:text="${part.getEffectiveDate()}"></td>
-                <td th:text="${part.getCurrencyMidRate()}"></td>
-
-
-            </tr>
-    </table>
-</div>
 <div style="height:500px;">
     <canvas id="myChart"></canvas>
     <script th:inline="javascript">
-
 
 
         var data = [[${datasarray}]];
@@ -53,6 +27,34 @@
 
     </script>
 </div>
+
+
+<div class="container">
+    <table class="table table-striped">
+
+        <tr>
+            <th>
+                <div th:text="'Currency name: '+${crForm.getCurrencyCode()}"></div>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <div th:text="'Rates number: '+${crForm.getratesCount()}"></div>
+            </th>
+            <th>
+        </tr>
+    </table>
+    <table>
+        <tr th:each="part : ${results.getCurrencyRates()} ">
+
+            <td th:text="${part.getEffectiveDate()}"></td>
+            <td th:text="${part.getCurrencyMidRate()}"></td>
+
+
+        </tr>
+    </table>
+</div>
+
 </body>
 </html>
 
