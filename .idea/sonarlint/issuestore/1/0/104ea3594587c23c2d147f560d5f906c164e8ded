@@ -1,4 +1,4 @@
 
-Š"squid:ClassVariableVisibilityCheck"PMake cena a static final constant or non-public and provide accessors if needed.(öÎˆïþÿÿÿÿ8ª·¢ô¸,
-ysquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Óò­Ç8»ãþò¸,
 Ÿsquid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ËõäÌ8»ãþò¸,
+ysquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Óò­Ç8»ãþò¸,
+Š"squid:ClassVariableVisibilityCheck"PMake cena a static final constant or non-public and provide accessors if needed.(öÎˆïþÿÿÿÿ8ª·¢ô¸,

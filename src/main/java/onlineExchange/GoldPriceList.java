@@ -19,13 +19,13 @@ public class GoldPriceList {
     public void setItem(GoldPrice[] item) {
         this.item = item;
     }
-    public GoldPriceList(int itemcounter)
+   /* public GoldPriceList(int itemcounter)
     {
         this.item=getPriceList(itemcounter);
         this.itemcounter=itemcounter;
         reasultPrint();
     }
-
+*/
     public int getItemcounter() {
         return itemcounter;
     }
@@ -35,13 +35,7 @@ public class GoldPriceList {
     }
 
 
-    private GoldPrice[]  getPriceList(int counter)
-    {
-        RestTemplate restTemplate = new RestTemplate();
-        //
-        return restTemplate.getForObject("http://api.nbp.pl/api/cenyzlota/last/" + counter + "/?format=json",GoldPrice[].class);
-        //return restTemplate.getForObject("http://api.nbp.pl/api/exchangerates/rates/a/gbp/last/2/?format=json",GoldPrice[].class);
-    }
+
     private void reasultPrint()
     {
         for (int i=0; i<item.length;i++)

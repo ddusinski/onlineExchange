@@ -4,16 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
-public class CurrencyForm {
+import javax.validation.constraints.NotNull;
 
-    private int currencyCode;
+public class CurrencyForm {
+    @NotNull
+    private String currencyCode;
+    @NotNull
     private int ratesCount;
 
-    public int getCurrencyCode() {
+    public String getCurrencyCode() {
         return currencyCode;
     }
 
-    public void setCurrencyCode(int currencyCode) {
+    public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
 

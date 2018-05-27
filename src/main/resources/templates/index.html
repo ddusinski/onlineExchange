@@ -7,18 +7,18 @@
 <div class="container">
     <table class="table table-striped">
         <form class="form-group" th:action="@{/}" th:object="${crList}" method="post">
-            <thead>
             <tr>
                 <td>
                     Choose currency code:
                 </td>
-                <td><input class="form-control" type="radio" checked="checked" th:field="*{currencyCode}" value="1">GBP</td>
-                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="2">EUR</td>
-                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="3">USD</td>
-                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="3">CHF</td>
+                <td><input class="form-control" type="radio" checked="checked" th:field="*{currencyCode}" value="gbp">GBP</td>
+                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="eur">EUR</td>
+                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="usd">USD</td>
+                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="chf">CHF</td>
+                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="gold">GOLD</td>
+                <td th:errors="*{currencyCode}"></td>
 
             </tr>
-
             <tr>
                 <td>
                     Choose amount of values:
@@ -26,14 +26,26 @@
                 <td>
                     <input class="form-control" type="text" th:field="*{ratesCount}"/>
                 </td>
+                <td th:errors="*{ratesCount}"></td>
+
+                <td></td>
+                <td></td>
+                <td></td>
+                </td></td>
 
             </tr>
+            <tr>
+                <td>
+                    <button type="submit">Submit</button>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                </td></td>
 
-            </thead>
-            <tbody>
-
-
-
+            </tr>
 
         </form>
     </table>
