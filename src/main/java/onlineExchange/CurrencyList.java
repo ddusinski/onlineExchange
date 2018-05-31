@@ -16,11 +16,7 @@ public class CurrencyList {
     private String currencyCode;
     @JsonProperty("rates")
     private ArrayList<CurrencyRate> currencyRates;
-    private int counter;
 
-    public int getCounter() {
-        return counter;
-    }
 
     public CurrencyRate getCurrencyRate(int rateNumer) {
         return this.currencyRates.get(rateNumer);
@@ -47,7 +43,6 @@ public class CurrencyList {
     }
 
     public void setCurrencyRates(ArrayList<CurrencyRate> currencyRates) {
-        this.counter = currencyRates.size();
         this.currencyRates = currencyRates;
     }
 
@@ -76,6 +71,13 @@ public class CurrencyList {
         }
         return names;
     }
+
+    public void addotherCurrencyList(CurrencyList secondCurrencyList)
+    {
+        this.currencyRates.addAll(secondCurrencyList.getCurrencyRates());
+
+    }
+
 
     @Override
     public String toString() {

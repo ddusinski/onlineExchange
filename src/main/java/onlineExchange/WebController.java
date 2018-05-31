@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Controller
 public class WebController {
@@ -25,15 +27,6 @@ public class WebController {
         return "index";
     }
 
-    /*public String showForm(Model model) {
-        GoldPriceList gpd = new GoldPriceList( 100);
-        model.addAttribute("GoldPriceList", gpd);
-        model.addAttribute("datasarray", gpd.getDataArray());
-        model.addAttribute("namesarray", gpd.getNameArray());
-        return "goldGraph";
-    }
-
-*/
 
     @PostMapping("/")
     public String checkComplexNumberInputForm(Model model, @Valid @ModelAttribute("crForm") CurrencyForm graphForm, BindingResult bindingResult) {
@@ -61,13 +54,31 @@ public class WebController {
 
     private CurrencyList getCurrencyData(int counter, String code) {
         RestTemplate restTemplate = new RestTemplate();
-        CurrencyList list =
-                restTemplate.getForObject("http://api.nbp.pl/api/exchangerates/rates/a/" + code + "/last/" + counter + "/?format=json", CurrencyList.class);
+        CurrencyList listB = new CurrencyList();
 
-        for (int i = 0; i < list.getCounter(); i++) {
-            log.info(list.getCurrencyRate(i).toString());
+        if (counter > 255) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -255);
+            String endDate = dateFormat.format(cal.getTime());
+            log.info(endDate);
+            cal.add(Calendar.DATE, -(counter - 255));
+            String startDate = dateFormat.format(cal.getTime());
+            log.info(startDate);
+            log.info("http://api.nbp.pl/api/exchangerates/rates/a/" + code + "/" + startDate + "/" + endDate + "/?format=json");
+             listB =
+                    restTemplate.getForObject("http://api.nbp.pl/api/exchangerates/rates/a/" + code + "/" + startDate + "/" + endDate + "/?format=json", CurrencyList.class);
+            counter = 255;
         }
-        return list;
+
+            //CurrencyList listA =
+             //   restTemplate.getForObject("http://api.nbp.pl/api/exchangerates/rates/a/" + code + "/last/" + counter + "/?format=json", CurrencyList.class);
+
+            //for (int i = 0; i < listA.getCurrencyRates().size(); i++) {
+            //log.info(list.getCurrencyRate(i).toString());
+           // }
+
+        return listB;
     }
 
     private CurrencyList getGoldPriceList(int counter) {
