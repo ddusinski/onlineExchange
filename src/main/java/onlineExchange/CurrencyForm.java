@@ -1,11 +1,13 @@
 package onlineExchange;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class CurrencyForm {
-    @NotNull
+    @NotNull(message = "You should choose the currency")
     private String currencyCode;
     @NotNull
+    @Min(value = 1, message = "Should be bigger then 1")
     private int ratesCount;
 
     public String getCurrencyCode() {
@@ -16,11 +18,11 @@ public class CurrencyForm {
         this.currencyCode = currencyCode;
     }
 
-    public int getratesCount() {
+    public int getRatesCount() {
         return ratesCount;
     }
 
-    public void setratesCount(int ratesAmount) {
+    public void setRatesCount(int ratesAmount) {
         this.ratesCount = ratesAmount;
     }
 }

@@ -2,120 +2,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Currency Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
-    <table class="table table-striped">
-        <form class="form-group" th:action="@{/}" th:object="${crList}" method="post">
-            <tr>
-                <td>
-                    Choose currency code:
-                </td>
-                <td><input class="form-control" type="radio" checked="checked" th:field="*{currencyCode}" value="gbp">GBP
-                </td>
-                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="eur">EUR</td>
-                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="usd">USD</td>
-                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="chf">CHF</td>
-                <td><input class="form-control" type="radio" th:field="*{currencyCode}" value="gold">GOLD</td>
-                <td th:errors="*{currencyCode}"></td>
+    <h1>Currency and gold value graph</h1>
 
-            </tr>
-            <tr>
-                <td>
-                    Choose amount of values:
-                </td>
-                <td>
-                    <input class="form-control" type="text" th:field="*{ratesCount}"/>
-                </td>
-                <td th:errors="*{ratesCount}"></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                </td></td>
-
-            </tr>
-            <tr>
-                <td>
-                    <button type="submit">Submit</button>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                </td></td>
-
-            </tr>
-
-        </form>
-    </table>
+    <form class="form-group" th:action="@{/}" th:object="${crForm}" method="post">
+        <div class="row">
+            <div class="col-lg-12"><h3>Choose currency code:</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="radio"><label><input type="radio" th:field="*{currencyCode}" value="gbp">GBP</label></div>
+            </div>
+            <div class="col-lg-2">
+                <div class="radio"><label><input type="radio" th:field="*{currencyCode}" value="eur">EUR</label></div>
+            </div>
+            <div class="col-lg-2">
+                <div class="radio"><label><input type="radio" th:field="*{currencyCode}" value="usd">USD</label></div>
+            </div>
+            <div class="col-lg-2">
+                <div class="radio"><label><input type="radio" th:field="*{currencyCode}" value="chf">CHF</label></div>
+            </div>
+            <div class="col-lg-2">
+                <div class="radio"><label><input type="radio" th:field="*{currencyCode}" value="gold">GOLD</label></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div th:if="${#fields.hasErrors('currencyCode')}" th:errors="*{currencyCode}">currencyCode error</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12"><h3>Choose amount of values:</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6"><input class="form-control" type="text" th:field="*{ratesCount}"/></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div th:if="${#fields.hasErrors('ratesCount')}" th:errors="*{ratesCount}">ratesCount error</div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <button type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
 </div>
-<div style="height:500px;">
-    <canvas id="myChart"></canvas>
-    <script th:inline="javascript">
 
-
-        var data = [[${datasarray}]];
-        var label = [[${namesarray}]];
-        //console.log(message)
-
-        var ctx = document.getElementById("myChart").getContext('2d');
-        //ctx.canvas.width=10;
-        //ctx.canvas.height=10;
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: label,
-                datasets: [{
-                    label: 'dd',
-                    data: data
-                }]
-            }
-        });
-
-
-        /*{
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 0.1
-        }]
-    },
-
-
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
-
-*/
-
-    </script>
-</div>
-</body>
 </body>
 </html>

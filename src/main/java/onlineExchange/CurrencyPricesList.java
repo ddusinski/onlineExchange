@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CurrencyList {
+public class CurrencyPricesList implements DataResponse {
 
     @JsonProperty("table")
     private String tableName;
@@ -15,7 +17,11 @@ public class CurrencyList {
     @JsonProperty("code")
     private String currencyCode;
     @JsonProperty("rates")
-    private ArrayList<CurrencyRate> currencyRates;
+    private List<CurrencyRate> currencyRates;
+
+    public CurrencyPricesList() {
+        this.currencyRates = new ArrayList<>();
+    }
 
 
     public CurrencyRate getCurrencyRate(int rateNumer) {
@@ -42,11 +48,11 @@ public class CurrencyList {
         this.currencyName = currencyName;
     }
 
-    public void setCurrencyRates(ArrayList<CurrencyRate> currencyRates) {
+    public void setCurrencyRates(List<CurrencyRate> currencyRates) {
         this.currencyRates = currencyRates;
     }
 
-    public ArrayList<CurrencyRate> getCurrencyRates() {
+    public List<CurrencyRate> getCurrencyRates() {
         return currencyRates;
     }
 
@@ -63,7 +69,7 @@ public class CurrencyList {
         return values;
     }
 
-    public String[] getGraphNames() {
+    public String[] getGraphDates() {
         String[] names = new String[this.currencyRates.size()];
 
         for (int i = 0; i < this.currencyRates.size(); i++) {
@@ -72,15 +78,10 @@ public class CurrencyList {
         return names;
     }
 
-    public void addotherCurrencyList(CurrencyList secondCurrencyList)
-    {
+    public void addotherCurrencyPrices(CurrencyPricesList secondCurrencyList) {
         this.currencyRates.addAll(secondCurrencyList.getCurrencyRates());
 
     }
 
 
-    @Override
-    public String toString() {
-        return "nazwa waluty: " + this.currencyName + this.currencyRates.toString();
-    }
 }

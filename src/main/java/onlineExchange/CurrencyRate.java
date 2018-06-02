@@ -38,8 +38,4 @@ public class CurrencyRate {
         this.rateNumber = rateNumber;
     }
 
-    @Override
-    public String toString() {
-        return " wartość waluty: " + this.currencyMidRate;
-    }
 }
