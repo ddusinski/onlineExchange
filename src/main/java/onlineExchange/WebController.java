@@ -42,45 +42,7 @@ public class WebController {
         return "makeGraph";
     }
 }
-/*
-    private CurrencyPricesList getCurrencyData(int counter, String code) {
-        RestTemplate restTemplate = new RestTemplate();
-        CurrencyPricesList list = new CurrencyPricesList();
 
-        if (counter > 255) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, -255);
-            String endDate = dateFormat.format(cal.getTime());
-            log.info(endDate);
-            cal.add(Calendar.DATE, -(counter - 255));
-            String startDate = dateFormat.format(cal.getTime());
-            log.info(startDate);
-            //log.info("http://api.nbp.pl/api/exchangerates/rates/a/" + code + "/" + startDate + "/" + endDate + "/?format=json");
-             list =
-                    restTemplate.getForObject("http://api.nbp.pl/api/exchangerates/rates/a/" + code + "/" + startDate + "/" + endDate + "/?format=json", CurrencyPricesList.class);
-            counter = 255;
-        }
-
-            list.addotherCurrencyPrices(
-                restTemplate.getForObject("http://api.nbp.pl/api/exchangerates/rates/a/" + code + "/last/" + counter + "/?format=json", CurrencyPricesList.class));
-
-            for (int i = 0; i < listA.getCurrencyRates().size(); i++) {
-            log.info(listA.getCurrencyRate(i).toString());
-
-            list.addotherCurrencyPrices(list);
-
-        return list;
-    }
-
-
-
-
-
-
-
-
-*/
 
 
 

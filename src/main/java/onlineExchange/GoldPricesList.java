@@ -2,6 +2,7 @@ package onlineExchange;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,10 +11,18 @@ public class GoldPricesList implements DataResponse {
     @JsonProperty("CenaZlota")
     private List<GoldPrice> item;
 
-    GoldPricesList(GoldPrice[] prices) {
-        this.item = Arrays.asList(prices);
+    GoldPricesList() {
+        this.item =new ArrayList<>() ;
 
     }
+
+
+    public void addGoldList(GoldPrice[] prices)
+    {
+        this.item.addAll(Arrays.asList(prices));
+
+    }
+
 
     public List<GoldPrice> getItem() {
         return item;
