@@ -23,7 +23,6 @@ public class CurrencyPricesList implements DataResponse {
         this.currencyRates = new ArrayList<>();
     }
 
-
     public CurrencyRate getCurrencyRate(int rateNumer) {
         return this.currencyRates.get(rateNumer);
     }

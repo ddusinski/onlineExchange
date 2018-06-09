@@ -1,5 +1,6 @@
 package onlineExchange;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -8,6 +9,7 @@ public class CurrencyForm {
     private String currencyCode;
     @NotNull
     @Min(value = 1, message = "Should be bigger then 1")
+    @Max(value=400, message ="Maximum 400 request")
     private int ratesCount;
 
     public String getCurrencyCode() {

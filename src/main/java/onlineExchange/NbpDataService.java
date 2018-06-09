@@ -8,16 +8,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class NbpDataService {
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
+    private static final Logger log = LoggerFactory.getLogger(NbpDataService.class);
 
-    private String code;
-    private int counter;
+    final static String URL_CURRENCY_DATES = "http://api.nbp.pl/api/exchangerates/rates/a/%s/%s/%s/?format=json";
+    final static String URL_CURRENCY = "http://api.nbp.pl/api/exchangerates/rates/a/%s/last/%d/?format=json";
+    final static String URL_GOLD_DATES = "http://api.nbp.pl/api/cenyzlota/%s/%s/?format=json";
+    final static String URL_GOLD = "http://api.nbp.pl/api/cenyzlota/last/%d/?format=json";
     private DataResponse result;
     private RestTemplate restTemplate = new RestTemplate();
 
     NbpDataService(String code, int counter) {
-        this.code = code;
-        this.counter = counter;
 
         if (code.equals("gold")) {
             this.result = getGoldPriceList(counter);
@@ -33,19 +33,17 @@ public class NbpDataService {
     private CurrencyPricesList getCurrencyData(int counter, String code) {
         CurrencyPricesList currencyPricesList = new CurrencyPricesList();
 
-        //dodaję rekordy stasze niż ostatnie 255 wpisów
-        if (counter > 255) {
+        if (isBiggerThenRequest(counter)) {
             String startDate = getDate(counter);
             String endDate = getDate(255);
             String urlCurrencyDates =
-                    String.format("http://api.nbp.pl/api/exchangerates/rates/a/%s/%s/%s/?format=json", code, startDate, endDate);
+                    String.format(URL_CURRENCY_DATES, code, startDate, endDate);
             log.info(urlCurrencyDates);
             currencyPricesList = restTemplate.getForObject(urlCurrencyDates, CurrencyPricesList.class);
             counter = 255;
         }
 
-        //dodaję pierwsze 255 wpisów
-        String urlCurrency = String.format("http://api.nbp.pl/api/exchangerates/rates/a/%s/last/%d/?format=json", code, counter);
+        String urlCurrency = String.format(URL_CURRENCY, code, counter);
         currencyPricesList.addotherCurrencyPrices(restTemplate.getForObject(urlCurrency, CurrencyPricesList.class));
         return currencyPricesList;
     }
@@ -54,29 +52,35 @@ public class NbpDataService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -substractDays);
-        String date = dateFormat.format(cal.getTime());
-        return date;
+        return dateFormat.format(cal.getTime());
     }
 
 
     private GoldPricesList getGoldPriceList(int counter) {
         GoldPricesList goldPricesList = new GoldPricesList();
 
-        //dodaję rekordy stasze niż ostatnie 255 wpisów
-        if (counter > 255) {
+
+        if (isBiggerThenRequest(counter)) {
             String startDate = getDate(counter);
             String endDate = getDate(255);
-            String urlGoldDates =
-                    String.format("http://api.nbp.pl/api/cenyzlota/%s/%s/?format=json", startDate, endDate);
+            String urlGoldDates = String.format(URL_GOLD_DATES, startDate, endDate);
             log.info(urlGoldDates);
+            log.info(startDate);
+            log.info(endDate);
             goldPricesList.addGoldList(restTemplate.getForObject(urlGoldDates, GoldPrice[].class));
+
             counter = 255;
         }
 
-        //dodaję pierwsze 255 wpisów
-        String urlGold = String.format("http://api.nbp.pl/api/cenyzlota/last/%d/?format=json", counter);
+
+        String urlGold = String.format(URL_GOLD, counter);
         goldPricesList.addGoldList(restTemplate.getForObject(urlGold, GoldPrice[].class));
         return goldPricesList;
+    }
+
+    private Boolean isBiggerThenRequest(int requestSize) {
+        return requestSize > 255;
+
     }
 
 

@@ -13,9 +13,6 @@ public class GoldPrice {
     @JsonProperty("cena")
     private Double price;
 
-    public GoldPrice() {
-    }
-
     public String getDate() {
         return data;
     }
