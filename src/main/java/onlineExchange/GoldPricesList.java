@@ -10,17 +10,17 @@ public class GoldPricesList implements DataResponse {
 
     @JsonProperty("CenaZlota")
     private List<GoldPrice> item;
+    private double avgValue;
+    private double minValue;
+    private double maxValue;
 
     GoldPricesList() {
         this.item =new ArrayList<>() ;
-
     }
-
 
     public void addGoldList(GoldPrice[] prices)
     {
         this.item.addAll(Arrays.asList(prices));
-
     }
 
 
@@ -47,5 +47,30 @@ public class GoldPricesList implements DataResponse {
             nameArray[i] = item.get(i).getDate();
         }
         return nameArray;
+    }
+    public void setAvgValue(double avgValue) {
+        this.avgValue = avgValue;
+    }
+
+    public double getAvgValue(){
+        return this.avgValue;
+    }
+
+
+    public double getMaxValue() {
+        return maxValue;
+    }
+
+
+    public double getMinValue() {
+        return minValue;
+    }
+
+    public void setMinValue(double minValue) {
+        this.minValue = minValue;
+    }
+
+    public void setMaxValue(double maxValue) {
+        this.maxValue = maxValue;
     }
 }

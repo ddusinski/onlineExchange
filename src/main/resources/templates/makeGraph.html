@@ -36,8 +36,6 @@
                         <td th:text="${datasArray[i.index]}"></td>
                     </tr>
 
-
-
                 </table>
         </div>
         <div class="col-sm-9">
@@ -45,31 +43,80 @@
             <script th:inline="javascript">
                 var data = [[${pricesArray}]];
                 var label = [[${datasArray}]];
+                var avg = Math.round([[${avgValue}]]*1000)/1000;
+                var min = Math.round([[${minValue}]]*1000)/1000;
+                var max = Math.round([[${maxValue}]]*1000)/1000;
+
+                var generateTable = function(value) {
+                    var tmpdata = [];
+                    for (var i = 0; i < data.length; i++) {
+                        tmpdata.push({
+                            x:i,
+                            y: value,
+                        });
+                    }
+                    return tmpdata;
+                };
+
+                var avgTable = generateTable(avg);
+                var minTable = generateTable(min);
+                var maxTable = generateTable(max);
+
                 var ctx = document.getElementById("myChart").getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: label,
-                        datasets: [{
-                            label: 'Currency Rates',
-                            data: data
-                        }]
+                        datasets: [
+                            {
+                                type:'line',
+                                label: 'Currency Rates',
+                                data: data
+                            },
+                            {
+                                type:'line',
+                                label: 'avgValue: '+avg,
+                                data: avgTable,
+                                borderColor:'rgb(255, 99, 132)',
+                                pointRadius:0,
+                                fill:false,
+                            },
+                            {
+                                type:'line',
+                                label: 'minValue: '+min,
+                                data: minTable,
+                                borderColor:'rgb(54, 162, 235)',
+                                pointRadius:0,
+                                fill:false,
+                            },
+                            {
+                                type:'line',
+                                label: 'maxValue: '+max,
+                                data: maxTable,
+                                borderColor:'rgb(255, 205, 86)',
+                                pointRadius:0,
+                                fill:false,
+                            }
+                        ]
+                    },
+                    options:{
+                        scales:{
+                            xAxes:[
+                                {
+
+                                },
+                                {
+                                display:false,
+                                }
+                            ]
+                        }
                     }
+
                 });
             </script>
         </div>
     </div>
-
-
 </div>
-
-
-
-
-
-
-
-
 
 </body>
 </html>

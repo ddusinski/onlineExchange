@@ -19,6 +19,10 @@ public class CurrencyPricesList implements DataResponse {
     @JsonProperty("rates")
     private List<CurrencyRate> currencyRates;
 
+    private double avgValue;
+    private double minValue;
+    private double maxValue;
+
     public CurrencyPricesList() {
         this.currencyRates = new ArrayList<>();
     }
@@ -77,10 +81,31 @@ public class CurrencyPricesList implements DataResponse {
         return names;
     }
 
-    public void addotherCurrencyPrices(CurrencyPricesList secondCurrencyList) {
+    public void addOtherCurrencyPrices(CurrencyPricesList secondCurrencyList) {
         this.currencyRates.addAll(secondCurrencyList.getCurrencyRates());
-
     }
 
+    public void setAvgValue(double avgValue) {
+        this.avgValue = avgValue;
+    }
 
+    public double getAvgValue() {
+        return this.avgValue;
+    }
+
+    public double getMaxValue() {
+        return maxValue;
+    }
+
+    public double getMinValue() {
+        return minValue;
+    }
+
+    public void setMinValue(double minValue) {
+        this.minValue = minValue;
+    }
+
+    public void setMaxValue(double maxValue) {
+        this.maxValue = maxValue;
+    }
 }

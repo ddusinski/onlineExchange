@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+
 
 public class NbpDataService {
     private static final Logger log = LoggerFactory.getLogger(NbpDataService.class);
@@ -16,13 +18,19 @@ public class NbpDataService {
     final static String URL_GOLD = "http://api.nbp.pl/api/cenyzlota/last/%d/?format=json";
     private DataResponse result;
     private RestTemplate restTemplate = new RestTemplate();
+    DatabaseService dbService = new DatabaseService();
 
-    NbpDataService(String code, int counter) {
+
+    NbpDataService(String code, int counter)
+
+    {
 
         if (code.equals("gold")) {
             this.result = getGoldPriceList(counter);
+
         } else {
             this.result = getCurrencyData(counter, code);
+
         }
     }
 
@@ -32,57 +40,104 @@ public class NbpDataService {
 
     private CurrencyPricesList getCurrencyData(int counter, String code) {
         CurrencyPricesList currencyPricesList = new CurrencyPricesList();
+        ArrayList<String> datesRange = findDatesRange(counter);
 
-        if (isBiggerThenRequest(counter)) {
-            String startDate = getDate(counter);
-            String endDate = getDate(255);
-            String urlCurrencyDates =
-                    String.format(URL_CURRENCY_DATES, code, startDate, endDate);
-            log.info(urlCurrencyDates);
-            currencyPricesList = restTemplate.getForObject(urlCurrencyDates, CurrencyPricesList.class);
-            counter = 255;
+        for (int i = datesRange.size() - 1; i > 0; i--) {
+            String startDate = datesRange.get(i);
+            String endDate = datesRange.get(i - 1);
+            String urlCurrencyDates = String.format(URL_CURRENCY_DATES, code, startDate, endDate);
+            currencyPricesList.addOtherCurrencyPrices(restTemplate.getForObject(urlCurrencyDates, CurrencyPricesList.class));
         }
 
-        String urlCurrency = String.format(URL_CURRENCY, code, counter);
-        currencyPricesList.addotherCurrencyPrices(restTemplate.getForObject(urlCurrency, CurrencyPricesList.class));
-        return currencyPricesList;
-    }
+        dbService.addQueries(currencyPricesList.getGraphDates(), currencyPricesList.getGraphValues(), code);
+        currencyPricesList.setAvgValue(dbService.countAvgValue());
+        currencyPricesList.setMaxValue(dbService.countMaxValue());
+        currencyPricesList.setMinValue(dbService.countMinValue());
 
-    private String getDate(int substractDays) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -substractDays);
-        return dateFormat.format(cal.getTime());
+
+        return currencyPricesList;
     }
 
 
     private GoldPricesList getGoldPriceList(int counter) {
         GoldPricesList goldPricesList = new GoldPricesList();
+        ArrayList<String> datesRange = findDatesRange(counter);
 
-
-        if (isBiggerThenRequest(counter)) {
-            String startDate = getDate(counter);
-            String endDate = getDate(255);
+        for (int i = datesRange.size() - 1; i > 0; i--) {
+            String startDate = datesRange.get(i);
+            String endDate = datesRange.get(i - 1);
             String urlGoldDates = String.format(URL_GOLD_DATES, startDate, endDate);
             log.info(urlGoldDates);
-            log.info(startDate);
-            log.info(endDate);
             goldPricesList.addGoldList(restTemplate.getForObject(urlGoldDates, GoldPrice[].class));
-
-            counter = 255;
         }
+        dbService.addQueries(goldPricesList.getGraphDates(), goldPricesList.getGraphValues(), "GOLD");
+        goldPricesList.setAvgValue(dbService.countAvgValue());
+        goldPricesList.setMaxValue(dbService.countMaxValue());
+        goldPricesList.setMinValue(dbService.countMinValue());
 
-
-        String urlGold = String.format(URL_GOLD, counter);
-        goldPricesList.addGoldList(restTemplate.getForObject(urlGold, GoldPrice[].class));
         return goldPricesList;
     }
 
-    private Boolean isBiggerThenRequest(int requestSize) {
-        return requestSize > 255;
 
+
+    private ArrayList<String> findDatesRange(int counter) {
+
+        ArrayList<String> datesRange = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+
+        int rangeCounter = 0;
+        datesRange.add(dateFormat.format(cal.getTime()));
+
+
+        while (counter > 0) {
+            if (isHoliday(cal) == false) {
+                counter--;
+            }
+            if (rangeCounter == 366) {
+                datesRange.add(dateFormat.format(cal.getTime()));
+                rangeCounter = 0;
+
+            }
+            cal.add(Calendar.DATE, -1);
+            rangeCounter++;
+        }
+        datesRange.add(dateFormat.format(cal.getTime()));
+        log.info(datesRange.toString());
+        return datesRange;
     }
 
+    private boolean isHoliday(Calendar calendar)
+    {
+        boolean holiday = false;
+
+        //  how to add Bożę ciało i poniedziałek wielkanoncy??
+
+        if (calendar.get(Calendar.MONTH) == Calendar.JANUARY && calendar.get(Calendar.DAY_OF_MONTH) == 1) {
+            holiday = true;
+        } else if (calendar.get(Calendar.MONTH) == Calendar.JANUARY && calendar.get(Calendar.DAY_OF_MONTH) == 6) {
+            holiday = true;
+        } else if (calendar.get(Calendar.MONTH) == Calendar.MAY && calendar.get(Calendar.DAY_OF_MONTH) == 1) {
+            holiday = true;
+        } else if (calendar.get(Calendar.MONTH) == Calendar.MAY && calendar.get(Calendar.DAY_OF_MONTH) == 3) {
+            holiday = true;
+        } else if (calendar.get(Calendar.MONTH) == Calendar.AUGUST && calendar.get(Calendar.DAY_OF_MONTH) == 15) {
+            holiday = true;
+        } else if (calendar.get(Calendar.MONTH) == Calendar.NOVEMBER && calendar.get(Calendar.DAY_OF_MONTH) == 1) {
+            holiday = true;
+        } else if (calendar.get(Calendar.MONTH) == Calendar.NOVEMBER && calendar.get(Calendar.DAY_OF_MONTH) == 11) {
+            holiday = true;
+        } else if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DAY_OF_MONTH) == 25) {
+            holiday = true;
+        } else if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DAY_OF_MONTH) == 26) {
+            holiday = true;
+        } else if ((calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)) {
+            holiday = true;
+        } else if ((calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
+            holiday = true;
+        }
+        return holiday;
+    }
 
 }
 
